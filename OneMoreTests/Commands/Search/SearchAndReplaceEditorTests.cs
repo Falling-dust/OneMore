@@ -6,6 +6,7 @@ namespace River.OneMoreAddIn.Tests.Commands.Search
 {
 	using Microsoft.VisualStudio.TestTools.UnitTesting;
 	using River.OneMoreAddIn.Commands;
+	using River.OneMoreAddIn.Models;
 	using River.OneMoreAddIn.Tests.Builders;
 	using System.Linq;
 	using System.Xml.Linq;
@@ -16,6 +17,105 @@ namespace River.OneMoreAddIn.Tests.Commands.Search
 	{
 		private static readonly XNamespace Ns =
 			"http://schemas.microsoft.com/office/onenote/2013/onenote";
+
+
+		[TestMethod]
+		public void SearchAndReplace_ZeroWidthLinkInsertion_UsesActualInsertionNode()
+		{
+			var page = new Page(new PageBuilder().WithParagraph(
+				"cat<a href='original'>linked</a> tail", selected: true).BuildElement());
+			var editor = new SearchAndReplaceEditor("(?=cat)|(?= tail)",
+				new XElement("a", new XAttribute("href", "new"), "X"), true, true);
+
+			Assert.AreEqual(2, editor.SearchAndReplace(BodyRun(page).Parent),
+				"An insertion before or after a separate link must remain replaceable.");
+			var wrapper = BodyRun(page).GetCData().GetWrapper();
+			Assert.AreEqual("XcatlinkedX tail", wrapper.Value);
+			Assert.AreEqual(3, wrapper.Elements("a").Count());
+			Assert.AreEqual(0, wrapper.Descendants("a").Descendants("a").Count());
+		}
+
+
+		[TestMethod]
+		public void SearchAndReplace_ZeroWidthLinkInsertion_RejectsNestedLinksAtRunEnd()
+		{
+			var page = new Page(new PageBuilder().WithParagraph(
+				"before <a href='original'><span>cat</span></a>", selected: true).BuildElement());
+			var editor = new SearchAndReplaceEditor("^|(?=cat)|$",
+				new XElement("a", new XAttribute("href", "new"), "X"), true, true);
+
+			Assert.AreEqual(1, editor.SearchAndReplace(BodyRun(page).Parent));
+			var wrapper = BodyRun(page).GetCData().GetWrapper();
+			Assert.AreEqual("Xbefore cat", wrapper.Value);
+			Assert.AreEqual(2, wrapper.Elements("a").Count());
+			Assert.AreEqual(0, wrapper.Descendants("a").Descendants("a").Count());
+		}
+
+
+		[TestMethod]
+		public void SearchAndReplace_XmlCaptureSubstitution_EscapesTextAndAttributes()
+		{
+			var page = new Page(new PageBuilder().WithParagraph(
+				"A&amp;B&lt;3&quot;", selected: true).BuildElement());
+			var editor = new SearchAndReplaceEditor("(A&B<3\")",
+				new XElement("a", new XAttribute("href", "https://example.test/?q=$1"), "$1"),
+				true, true);
+
+			Assert.AreEqual(1, editor.SearchAndReplace(page));
+			var anchor = BodyRun(page).GetCData().GetWrapper().Element("a");
+			Assert.AreEqual("A&B<3\"", anchor.Value);
+			Assert.AreEqual("https://example.test/?q=A&B<3\"", anchor.Attribute("href").Value);
+		}
+
+
+		[TestMethod]
+		public void SearchAndReplace_LiteralReplacement_PreservesDollarAndMarkupCharacters()
+		{
+			var page = new Page(new PageBuilder().WithParagraph("cat", selected: true).BuildElement());
+			var editor = new SearchAndReplaceEditor("cat", "$1 & <b>", false, true);
+
+			Assert.AreEqual(1, editor.SearchAndReplace(page));
+			var wrapper = BodyRun(page).GetCData().GetWrapper();
+			Assert.AreEqual("$1 & <b>", wrapper.Value);
+			Assert.AreEqual(0, wrapper.Elements().Count());
+		}
+
+
+		[DataTestMethod]
+		[DataRow("\r\n")]
+		[DataRow("\r")]
+		[DataRow("\n")]
+		public void ReplaceMatch_NewlineReplacement_PreservesLaterSnapshotOffsets(string newline)
+		{
+			var page = new Page(new PageBuilder().WithParagraph("cat cat", selected: true).BuildElement());
+			var session = new SearchAndReplaceSession(page,
+				new SearchAndReplaceEditor("cat", newline, false, true));
+
+			Assert.IsTrue(session.ReplaceCurrent());
+			Assert.AreEqual(2, session.Current.StartIndex);
+			Assert.IsTrue(session.ReplaceCurrent());
+			Assert.AreEqual("\n \n", BodyRun(page).GetCData().GetWrapper().Value);
+			Assert.AreEqual(0, session.RemainingCount);
+		}
+
+
+		[TestMethod]
+		public void ReplaceMatch_XmlNewlineReplacement_PreservesLaterSnapshotOffsets()
+		{
+			var page = new Page(new PageBuilder().WithParagraph("cat cat", selected: true).BuildElement());
+			var session = new SearchAndReplaceSession(page,
+				new SearchAndReplaceEditor("cat", new XElement("span", "\r\n"), false, true));
+
+			Assert.IsTrue(session.ReplaceCurrent());
+			Assert.AreEqual(2, session.Current.StartIndex);
+			Assert.IsTrue(session.ReplaceCurrent());
+			Assert.AreEqual("\n \n", BodyRun(page).GetCData().GetWrapper().Value);
+			Assert.AreEqual(0, session.RemainingCount);
+		}
+
+
+		private static XElement BodyRun(Page page) =>
+			page.Root.Elements(Ns + "Outline").Descendants(Ns + "T").First();
 
 
 		// Reproduces GitHub #1683 / #2528: a hashtag styled by a prior scan (or wrapped in a

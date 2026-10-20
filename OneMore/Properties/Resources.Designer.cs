@@ -15474,6 +15474,141 @@ namespace River.OneMoreAddIn.Properties {
         }
         
         /// <summary>
+        ///   Previous
+        /// </summary>
+        internal static string SearchAndReplaceSessionDialog_previous {
+            get {
+                return ResourceManager.GetString("SearchAndReplaceSessionDialog_previous", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Next
+        /// </summary>
+        internal static string SearchAndReplaceSessionDialog_next {
+            get {
+                return ResourceManager.GetString("SearchAndReplaceSessionDialog_next", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Re-search page
+        /// </summary>
+        internal static string SearchAndReplaceSessionDialog_research {
+            get {
+                return ResourceManager.GetString("SearchAndReplaceSessionDialog_research", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Wrap around
+        /// </summary>
+        internal static string SearchAndReplaceSessionDialog_wrap {
+            get {
+                return ResourceManager.GetString("SearchAndReplaceSessionDialog_wrap", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Current match (highlighted text will be replaced; │ marks an insertion)
+        /// </summary>
+        internal static string SearchAndReplaceSessionDialog_preview {
+            get {
+                return ResourceManager.GetString("SearchAndReplaceSessionDialog_preview", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Next skips this occurrence; Replace All includes all remaining matches in this search. Re-search page starts a new search across the entire page, including text already replaced. F3: next match. Shift+F3: previous match.
+        /// </summary>
+        internal static string SearchAndReplaceSessionDialog_help {
+            get {
+                return ResourceManager.GetString("SearchAndReplaceSessionDialog_help", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Match {0} of {1} · {2} remaining · {3} replaced
+        /// </summary>
+        internal static string SearchAndReplaceSessionDialog_progress {
+            get {
+                return ResourceManager.GetString("SearchAndReplaceSessionDialog_progress", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Page: {0}
+        /// </summary>
+        internal static string SearchAndReplaceSessionDialog_page {
+            get {
+                return ResourceManager.GetString("SearchAndReplaceSessionDialog_page", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Could not navigate to the paragraph. The highlighted preview still shows the replacement target.
+        /// </summary>
+        internal static string SearchAndReplaceSessionDialog_navigationFailed {
+            get {
+                return ResourceManager.GetString("SearchAndReplaceSessionDialog_navigationFailed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Could not display this match safely. Re-search the page before replacing.
+        /// </summary>
+        internal static string SearchAndReplaceSessionDialog_previewFailed {
+            get {
+                return ResourceManager.GetString("SearchAndReplaceSessionDialog_previewFailed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   The page changed. Re-search the page to review the latest matches before replacing.
+        /// </summary>
+        internal static string SearchAndReplaceSessionDialog_pageChanged {
+            get {
+                return ResourceManager.GetString("SearchAndReplaceSessionDialog_pageChanged", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   The replacement could not be confirmed. Re-search the page before trying again.
+        /// </summary>
+        internal static string SearchAndReplaceSessionDialog_saveFailed {
+            get {
+                return ResourceManager.GetString("SearchAndReplaceSessionDialog_saveFailed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Could not read the page. Try Re-search page again.
+        /// </summary>
+        internal static string SearchAndReplaceSessionDialog_refreshFailed {
+            get {
+                return ResourceManager.GetString("SearchAndReplaceSessionDialog_refreshFailed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Reached the end of the search in this direction. Use Previous/Next or enable Wrap around.
+        /// </summary>
+        internal static string SearchAndReplaceSessionDialog_boundary {
+            get {
+                return ResourceManager.GetString("SearchAndReplaceSessionDialog_boundary", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   No remaining matches · {0} replaced. Re-search page to search again.
+        /// </summary>
+        internal static string SearchAndReplaceSessionDialog_complete {
+            get {
+                return ResourceManager.GetString("SearchAndReplaceSessionDialog_complete", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Replace All.
         /// </summary>
         internal static string SearchAndReplaceSessionDialog_replaceAllButton_Text {

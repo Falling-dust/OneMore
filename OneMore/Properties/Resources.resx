@@ -6676,6 +6676,68 @@ All notebooks</value>
     <value>Replace with:</value>
     <comment>label</comment>
   </data>
+  <data name="SearchAndReplaceSessionDialog_previous" xml:space="preserve">
+    <value>Previous</value>
+    <comment>search and replace session</comment>
+  </data>
+  <data name="SearchAndReplaceSessionDialog_next" xml:space="preserve">
+    <value>Next</value>
+    <comment>search and replace session</comment>
+  </data>
+  <data name="SearchAndReplaceSessionDialog_research" xml:space="preserve">
+    <value>Re-search page</value>
+    <comment>search and replace session</comment>
+  </data>
+  <data name="SearchAndReplaceSessionDialog_wrap" xml:space="preserve">
+    <value>Wrap around</value>
+    <comment>search and replace session</comment>
+  </data>
+  <data name="SearchAndReplaceSessionDialog_preview" xml:space="preserve">
+    <value>Current match (highlighted text will be replaced; │ marks an insertion)</value>
+    <comment>search and replace session</comment>
+  </data>
+  <data name="SearchAndReplaceSessionDialog_help" xml:space="preserve">
+    <value>Next skips this occurrence; Replace All includes all remaining matches in this search.
+Re-search page starts a new search across the entire page, including text already replaced.
+F3: next match. Shift+F3: previous match.</value>
+    <comment>search and replace session</comment>
+  </data>
+  <data name="SearchAndReplaceSessionDialog_progress" xml:space="preserve">
+    <value>Match {0} of {1} · {2} remaining · {3} replaced</value>
+    <comment>search and replace session</comment>
+  </data>
+  <data name="SearchAndReplaceSessionDialog_page" xml:space="preserve">
+    <value>Page: {0}</value>
+    <comment>search and replace session</comment>
+  </data>
+  <data name="SearchAndReplaceSessionDialog_navigationFailed" xml:space="preserve">
+    <value>Could not navigate to the paragraph. The highlighted preview still shows the replacement target.</value>
+    <comment>search and replace session</comment>
+  </data>
+  <data name="SearchAndReplaceSessionDialog_previewFailed" xml:space="preserve">
+    <value>Could not display this match safely. Re-search the page before replacing.</value>
+    <comment>search and replace session</comment>
+  </data>
+  <data name="SearchAndReplaceSessionDialog_pageChanged" xml:space="preserve">
+    <value>The page changed. Re-search the page to review the latest matches before replacing.</value>
+    <comment>search and replace session</comment>
+  </data>
+  <data name="SearchAndReplaceSessionDialog_saveFailed" xml:space="preserve">
+    <value>The replacement could not be confirmed. Re-search the page before trying again.</value>
+    <comment>search and replace session</comment>
+  </data>
+  <data name="SearchAndReplaceSessionDialog_refreshFailed" xml:space="preserve">
+    <value>Could not read the page. Try Re-search page again.</value>
+    <comment>search and replace session</comment>
+  </data>
+  <data name="SearchAndReplaceSessionDialog_boundary" xml:space="preserve">
+    <value>Reached the end of the search in this direction. Use Previous/Next or enable Wrap around.</value>
+    <comment>search and replace session</comment>
+  </data>
+  <data name="SearchAndReplaceSessionDialog_complete" xml:space="preserve">
+    <value>No remaining matches · {0} replaced. Re-search page to search again.</value>
+    <comment>search and replace session</comment>
+  </data>
   <data name="SearchAndReplaceSessionDialog_replaceAllButton.Text" xml:space="preserve">
     <value>Replace All</value>
     <comment>button</comment>

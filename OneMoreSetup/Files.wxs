@@ -45,6 +45,9 @@
       <Component Id="ChineseDll">
         <File Source="..\OneMore\bin\$(var.Configuration)\Chinese.dll" KeyPath="yes" />
       </Component>
+      <Component Id="ExCssDll">
+        <File Source="..\OneMore\bin\$(var.Configuration)\ExCSS.dll" KeyPath="yes" />
+      </Component>
       <Component Id="HtmlAgilityPackDll">
         <File Source="..\OneMore\bin\$(var.Configuration)\HtmlAgilityPack.dll" KeyPath="yes" />
       </Component>
@@ -53,6 +56,9 @@
       </Component>
       <Component Id="MicrosoftBclAsyncInterfacesDll">
         <File Source="..\OneMore\bin\$(var.Configuration)\Microsoft.Bcl.AsyncInterfaces.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="MicrosoftBclHashCodeDll">
+        <File Source="..\OneMore\bin\$(var.Configuration)\Microsoft.Bcl.HashCode.dll" KeyPath="yes" />
       </Component>
       <Component Id="MicrosoftOfficeInteropOneNoteDll">
         <File Source="..\OneMore\bin\$(var.Configuration)\Microsoft.Office.Interop.OneNote.dll" KeyPath="yes" />
@@ -89,6 +95,9 @@
       </Component>
       <Component Id="StdoleDll">
         <File Source="..\OneMore\bin\$(var.Configuration)\stdole.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="SvgDll">
+        <File Source="..\OneMore\bin\$(var.Configuration)\Svg.dll" KeyPath="yes" />
       </Component>
 
       <!-- Vortice/SharpGen — Direct2D emoji color-glyph rendering -->
