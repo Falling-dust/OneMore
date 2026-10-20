@@ -17,6 +17,7 @@ namespace River.OneMoreAddIn.Commands
 
 	internal class SearchAndReplaceCommand : Command
 	{
+		private static SearchAndReplaceSessionDialog activeSession;
 		private Page currentPage;
 		private OneNote.Scope scope;
 		private bool stepwiseMode;
@@ -33,6 +34,12 @@ namespace River.OneMoreAddIn.Commands
 			using var guard = EnterOnce();
 			if (guard is null) { return; }
 
+			if (activeSession is not null && !activeSession.IsDisposed)
+			{
+				activeSession.Activate();
+				return;
+			}
+
 			editor = await MakeEditor();
 			if (editor is null)
 			{
@@ -42,9 +49,8 @@ namespace River.OneMoreAddIn.Commands
 			bool found;
 			if (scope == OneNote.Scope.Self)
 			{
-				found = stepwiseMode
-					? await SearchPageStepwise()
-					: await SearchPage();
+				OpenPageSession(replaceAll: !stepwiseMode);
+				return;
 			}
 			else
 			{
@@ -101,47 +107,15 @@ namespace River.OneMoreAddIn.Commands
 		}
 
 
-		private async Task<bool> SearchPage()
-		{
-			var count = editor.SearchAndReplace(currentPage);
-
-			if (count > 0)
-			{
-				logger.WriteLine($"found {count} matches on {currentPage.Title}");
-			}
-
-			if (count > 0)
-			{
-				using var one = new OneNote();
-				await one.Update(currentPage);
-				return true;
-			}
-
-			return false;
-		}
-
-
-		private async Task<bool> SearchPageStepwise()
+		private void OpenPageSession(bool replaceAll)
 		{
 			var matches = editor.FindAllMatches(currentPage);
 			logger.WriteLine($"found {matches.Count} stepwise matches on {currentPage.Title}");
-
-			if (matches.Count == 0)
-			{
-				ShowInfo(Resx.SearchAndReplaceCommand_NoMatches);
-				return false;
-			}
-
-			await using var one = new OneNote();
-			await one.NavigateTo(currentPage.PageId, matches[0].ParagraphObjectId);
-
-			var sessionDialog = new SearchAndReplaceSessionDialog(
-				currentPage, matches, editor, currentPage.PageId);
-
-			sessionDialog.RunModeless();
-
 			SaveSettings();
-			return true;
+			activeSession = new SearchAndReplaceSessionDialog(
+				currentPage, matches, editor, currentPage.PageId, replaceAll);
+			activeSession.FormClosed += (sender, e) => activeSession = null;
+			activeSession.RunModeless();
 		}
 
 

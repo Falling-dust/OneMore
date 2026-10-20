@@ -98,6 +98,9 @@
     <Compile Include="Commands\Tagging\HashtagScheduleTests.cs" />
     <Compile Include="Commands\Tagging\HashtagStageTests.cs" />
     <Compile Include="Commands\Search\PageTextExtractorTests.cs" />
+    <Compile Include="Commands\Search\SearchAndReplaceEditorTests.cs" />
+    <Compile Include="Commands\Search\SearchAndReplacePageStateTests.cs" />
+    <Compile Include="Commands\Search\SearchAndReplaceSessionTests.cs" />
     <Compile Include="Commands\Search\TextMatchBuilderTests.cs" />
     <Compile Include="TextIndex\IndexConsumerTests.cs" />
     <Compile Include="TextIndex\IndexProviderTests.cs" />

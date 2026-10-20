@@ -1852,8 +1852,12 @@ namespace River.OneMoreAddIn
 		/// </summary>
 		/// <param name="page">A Page</param>
 		/// <param name="force">Keep all Outlines to force full page update</param>
+		/// <param name="expectedLastModified">
+		/// Optional page revision to reject concurrent changes since the page was read.
+		/// </param>
 		/// <returns>True if the page content was updated successfully</returns>
-		public async Task<bool> Update(Page page, bool force = false)
+		public async Task<bool> Update(
+			Page page, bool force = false, DateTime? expectedLastModified = null)
 		{
 			if (page.HasActiveMedia())
 			{
@@ -1878,12 +1882,9 @@ namespace River.OneMoreAddIn
 				return false;
 			}
 
-			// dateExpectedLastModified (second param to UpdatePageConent) is merely a
-			// pessimistic-locking safeguard to prevent updating parts of a shared page that
-			// have since been updated; but we just don't use it at all, hence DateTime.MinValue
-			//var lastModTime = element.Attribute("lastModifiedTime") is XAttribute att
-			//	? DateTime.Parse(att.Value).ToUniversalTime()
-			//	: DateTime.MinValue;
+			// A modeless editor can supply its read revision to protect against changes
+			// between its pre-save check and this write. Existing callers retain the
+			// unrestricted-update behavior when no revision is supplied.
 
 			//logger.WriteLine(page.Root);
 			var xml = page.Root.ToString(SaveOptions.DisableFormatting);
@@ -1892,7 +1893,8 @@ namespace River.OneMoreAddIn
 
 			var result = await InvokeWithRetry(() =>
 			{
-				onenote.UpdatePageContent(xml, DateTime.MinValue, XMLSchema.xs2013, true);
+				onenote.UpdatePageContent(xml, expectedLastModified ?? DateTime.MinValue,
+					XMLSchema.xs2013, true);
 			});
 
 			stopwatch.Stop();

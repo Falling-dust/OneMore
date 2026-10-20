@@ -1383,6 +1383,8 @@
     <Compile Include="Commands\Search\Atoms\ElementAtom.cs" />
     <Compile Include="Commands\Search\Atoms\IAtom.cs" />
     <Compile Include="Commands\Search\SearchAndReplaceEditor.cs" />
+    <Compile Include="Commands\Search\SearchAndReplacePageState.cs" />
+    <Compile Include="Commands\Search\SearchAndReplaceSession.cs" />
     <Compile Include="Commands\Search\Atoms\TextAtom.cs" />
     <Compile Include="Commands\Tools\AboutCommand.cs" />
     <Compile Include="Commands\Tools\AddTopSectionGroupCommand.cs" />
